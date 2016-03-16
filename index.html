@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Webcomponents</title>
+	<!-- Import element -->
+	<link rel="import" href="bower_components/polymer/polymer.html">
+	<link rel="import" href="webcomponents/bidwin-counter.html">
+	<style>
+		.wrap {
+			width: 80%;
+			margin: 10px auto;
+		}
+		.panel {
+			float: left;
+			display: inline-block;
+			background: gray;
+			margin: 0 2px;
+		}
+
+		.panel-green {
+			background: green;
+		}
+
+		.short {
+			width: 18%;
+		}
+
+		.large {
+			width: 50%;
+		}
+
+		.medium {
+			width: 30%;
+		}
+
+		#actions > li {
+			display: inline;
+			background: blue;
+			color: white;
+		}
+	</style>
+</head>
+<body ng-app="bidwin">
+<div ng-controller="EditorController as ec">
+
+
+<div class="wrap">	
+	<header>
+		<h1>kitchen html5</h1>
+	</header>
+	
+	<div class="panel short" id="panelControls">
+		<ul id="listControls" 
+			ng-repeat="item in ec.inputs track by $index">
+			<li  ng-click="ec.addElement(item)">{{item.name}}</li>
+		</ul>
+	</div>
+
+	<section id="canvas">
+		<div class="panel panel-green large">
+			<span>Canvas</span>
+			<div id="canvasPanel">	
+				<form action="#">
+				<input-custom ng-repeat='v in ec.currentInputs track by $index' 
+					info="v"
+					type="custom" 
+					on-close="ec.close()"
+					on-view="ec.loadAttributes(v)" id='{{v.id}}'>
+				</input-custom>
+				</form>
+			</div>
+		</div>
+	</section>
+
+	<section id="properties">
+		<div class="panel medium" id="propertiesPanel">
+			<p>actions</p>
+			<div>
+				<properties-element 
+					data='ec.attributes'
+					change-text='ec.changeText'
+					on-save="ec.saveAttributes(ctrlDown)"
+					>
+				</properties-element>
+			</div>
+		</div>
+	</section>
+	</div>
+</div>
+	
+</div>
+
+<!-- Polyfill Web Components support for older browsers -->
+<script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+<script src="js/app.js"></script>
+<script src="js/directives/directive-inputcustom.js"></script>
+<script src="js/directives/directive-propertieselement.js"></script>
+</body>
+</html>
